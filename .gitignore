@@ -1,0 +1,39 @@
+# Arquivos compilados
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Diretórios de build
+build/
+dist/
+bin/
+obj/
+
+# Arquivos gerados pelo compilador
+*.out
+*.app
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Dependências
+*.dep
+*.d
+
+# Arquivos temporários
+*.tmp
+*.log

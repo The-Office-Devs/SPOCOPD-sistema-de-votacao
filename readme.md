@@ -76,7 +76,7 @@ docker run --rm mpi-votacao
 mpicc votacao.c -O3 -o ./build/votacao
 
 # Executar com 8 processos
-mpirun -np 8 .build/votacao
+mpirun -np 8 ./build/votacao
 ```
 
 ### Com Docker Compose (Cluster Multi-Node)

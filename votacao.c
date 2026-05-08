@@ -20,17 +20,11 @@ int main(int argc, char *argv[])
 
 	MPI_Get_processor_name(
 		hostname,
-		&hostname_len
-	);
+		&hostname_len);
 
-	printf(
-		"Rank %d executando em %s\n",
-		rank,
-		hostname
-	);
+	printf("Rank %d executando em %s\n", rank, hostname);
 
-	int votos_por_processo =
-		TOTAL_VOTOS / size;
+	int votos_por_processo = TOTAL_VOTOS / size;
 
 	// =========================
 	// Buffers
@@ -58,7 +52,7 @@ int main(int argc, char *argv[])
 			todos_votos[i] = rand() % CANDIDATOS;
 		}
 
-		printf("\nRank 0 gerou %d votos\n",TOTAL_VOTOS);
+		printf("\nRank 0 gerou %d votos\n", TOTAL_VOTOS);
 	}
 
 	// =========================
@@ -73,8 +67,7 @@ int main(int argc, char *argv[])
 		votos_por_processo,
 		MPI_INT,
 		0,
-		MPI_COMM_WORLD
-	);
+		MPI_COMM_WORLD);
 
 	// =========================
 	// Contagem local
@@ -103,8 +96,7 @@ int main(int argc, char *argv[])
 				MPI_INT,
 				rank + 1,
 				0,
-				MPI_COMM_WORLD
-			);
+				MPI_COMM_WORLD);
 		}
 	}
 	else
@@ -116,8 +108,7 @@ int main(int argc, char *argv[])
 			rank - 1,
 			0,
 			MPI_COMM_WORLD,
-			MPI_STATUS_IGNORE
-		);
+			MPI_STATUS_IGNORE);
 	}
 
 	// =========================
@@ -170,7 +161,7 @@ int main(int argc, char *argv[])
 		int soma = 0;
 		for (int i = 0; i < CANDIDATOS; i++)
 		{
-			printf("Candidato %d: %d votos\n",i,global[i]);
+			printf("Candidato %d: %d votos\n", i, global[i]);
 			soma += global[i];
 		}
 
@@ -185,7 +176,7 @@ int main(int argc, char *argv[])
 		{
 			printf("Erro de consenso: inconsistência detectada.\n");
 
-			printf("Esperado: %d | Recebido: %d\n",TOTAL_VOTOS,total_global);
+			printf("Esperado: %d | Recebido: %d\n", TOTAL_VOTOS, total_global);
 		}
 		printf("Tempo: %.4f segundos\n", fim - inicio);
 	}

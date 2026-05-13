@@ -6,7 +6,6 @@
 #define TOTAL_VOTOS 155000000
 #define CANDIDATOS 3
 
-// TODO: Ajustar tratamento do resto da divisão
 int main(int argc, char *argv[])
 {
 	int rank, size;
@@ -25,6 +24,7 @@ int main(int argc, char *argv[])
 	printf("Rank %d executando em %s\n", rank, hostname);
 
 	int votos_por_processo = TOTAL_VOTOS / size;
+	int resto = TOTAL_VOTOS % size;
 
 	// =========================
 	// Buffers
@@ -78,6 +78,19 @@ int main(int argc, char *argv[])
 		int voto = votos_locais[i];
 
 		local[voto]++;
+	}
+
+	// =========================
+	// Contagem do resto
+	// =========================
+
+	if (rank == 0 && resto > 0) {
+		printf("\nRank 0 processando %d voto(s) restante(s)\n", resto);
+
+		for (int i = TOTAL_VOTOS - resto; i < TOTAL_VOTOS; i++) 
+		{
+			local[todos_votos[i]]++;
+		}
 	}
 
 	// =========================

@@ -8,13 +8,14 @@ Cada processo MPI representa uma **seção eleitoral independente** em um cluste
 
 ### Fluxo de Funcionamento
 
-1. **Geração de Votos**: Rank 0 gera `TOTAL_VOTOS` votos aleatoriamente
+1. **Geração de Votos**: Rank 0 gera `TOTAL_VOTOS`
 2. **Distribuição (Scatter)**: Votos distribuídos entre processos usando `MPI_Scatter`
 3. **Contagem Local**: Cada processo conta votos para cada candidato
-4. **Replicação**: Dados replicados entre pares de processos (backup)
-5. **Agregação (Reduce)**: Resultados agregados com `MPI_Reduce`
-6. **Consenso**: Validação de consistência com confirmação do total global
-7. **Resultado Final**: Rank 0 consolida e exibe resultado com verificação
+4. **Contagem do Resto**: Rank 0 contabiliza os votos restantes da divisão (`TOTAL_VOTOS % size`),
+5. **Replicação**: Dados replicados entre pares de processos (backup)
+6. **Agregação (Reduce)**: Resultados agregados com `MPI_Reduce`
+7. **Consenso**: Validação de consistência com confirmação do total global
+8. **Resultado Final**: Rank 0 consolida e exibe resultado com verificação
 
 ---
 
@@ -91,6 +92,9 @@ mpirun \
   -np 8 \
   --hostfile /app/hosts \
   /app/votacao
+
+# Utilize o comando abaixo se der parse error ao executar a aplicação
+sed -i 's/\r$//' /app/hosts
 ```
 
 **Nota**: O arquivo `/app/hosts` contém a lista de nós do cluster.
@@ -99,7 +103,7 @@ mpirun \
 
 ## Configuração
 
-- **TOTAL_VOTOS**: 100.000.000 votos
+- **TOTAL_VOTOS**: 155.000.000 votos
 - **CANDIDATOS**: 3 candidatos
 - **Distribuição**: Votos divididos equitativamente entre processos
 
@@ -111,14 +115,14 @@ mpirun \
 Rank 0 executando em node-0
 Rank 1 executando em node-1
 ...
-Rank 0 gerou 100000000 votos
+Rank 0 gerou 155000000 votos
 
 === Resultado Final ===
-Candidato 0: 33333333 votos
-Candidato 1: 33333334 votos
-Candidato 2: 33333333 votos
+Candidato 0: X votos
+Candidato 1: Y votos
+Candidato 2: Z votos
 
-Total: 100000000 votos
+Total: 155000000 votos
 Consenso validado: todos os votos foram contabilizados.
 Tempo: X.XXXX segundos
 ```

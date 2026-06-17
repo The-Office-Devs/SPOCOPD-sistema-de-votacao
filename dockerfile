@@ -45,11 +45,11 @@ RUN cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys && \
 
 WORKDIR /app
 
-COPY votacao.c .
+COPY votacao_otimizada.c .
 
 COPY hosts /app/hosts
 
-RUN mpicc votacao.c -O3 -o votacao
+RUN mpicc votacao_otimizada.c -O3 -o votacao_otimizada
 
 EXPOSE 22
 

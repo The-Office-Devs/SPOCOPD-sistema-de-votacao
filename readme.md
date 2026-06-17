@@ -86,12 +86,12 @@ mpirun -np 8 ./build/votacao
 # Build e inicializar containers no cluster
 docker compose up --build -d
 
-# Executar aplicação MPI no cluster
-mpirun \
+# Executar aplicação MPI dentro do container master
+docker compose exec master mpirun \
   --allow-run-as-root \
   -np 8 \
   --hostfile /app/hosts \
-  /app/votacao
+  /app/votacao_otimizada
 
 # Utilize o comando abaixo se der parse error ao executar a aplicação
 sed -i 's/\r$//' /app/hosts
